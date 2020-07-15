@@ -13,14 +13,14 @@ const Signup = () => {
         success: false
     });
 
-    const {name, email, password} = values;
+    const {name, email, password, success, error} = values;
 
     const handleChange = name => event => {
         setValues({...values, error:false, [name]: event.target.value})
     };
 
     const signUp = (user) => {
-        fetch(`${API}/signup`, {
+        return fetch(`${API}/signup`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -31,35 +31,62 @@ const Signup = () => {
         .then(res => {
             return res.json()
         })
-        .catch(err => console.log(err));
+        .catch(error => console.log(error));
     }
 
 
     const clickSubmit = event => {
         event.preventDefault();
-        signUp({name, email, password});
+        signUp({name, email, password})
+        .then(data => {
+            if(data.err){
+                setValues({...values, error: data.err, success:false})
+            }else{
+                setValues({...values,
+                        name: '',
+                        email: '',
+                        password: '',
+                        error: '',
+                        success: true})
+            }
+        })
     }
 
     const signUpForm = () => (
             <form>
                 <div className="form-group">
                     <label className="text-muted">Name</label>
-                    <input onChange={handleChange('name')} type="text" className="form-control" />
+                    <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
                 </div>
                 <div className="form-group">
                     <label className="text-muted">Email</label>
-                    <input onChange={handleChange('email')} type="email" className="form-control" />
+                    <input onChange={handleChange('email')} type="email" className="form-control" value={email} />
                 </div>
                 <div className="form-group">
                     <label className="text-muted">Password</label>
-                    <input onChange={handleChange('password')} type="password" className="form-control" />
+                    <input onChange={handleChange('password')} type="password" className="form-control" value={password} />
                 </div>
                 <button onClick={clickSubmit} className="btn btn-primary">Submit</button>
             </form>
     );
 
+    const showError = () => (
+        <div className="alert alert-danger" style={{display:error ? '':'none'}} >
+            {error}
+        </div>
+    );
+
+    const showSuccess = () => (
+        <div className="alert alert-info" style={{display:success ? '':'none'}} >
+            Account created successfully. Please sign in.
+        </div>
+    );
+
+
     return(
         <Layout title="Sign Up Page" description = "Sign-up to Node React E-commerce App" className="container col-md-8 offset-md-2">
+            {showSuccess()}
+            {showError()}
             {signUpForm()}
             {JSON.stringify(values)}
         </Layout>
