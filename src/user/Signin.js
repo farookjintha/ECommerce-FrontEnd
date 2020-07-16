@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Layout from '../core/Layout';
-import { signIn, authenticate } from '../auth';
+import { signIn, authenticate, isAuthenticated } from '../auth';
 
 const Signin = () => {
-
+    // User
+    // "email": "xavier@gmail.com",
+	// "password": "xxx123"
     const [values, setValues] = useState({
         email: 'john@gmail.com',
         password: 'jjj123',
@@ -14,6 +16,7 @@ const Signin = () => {
     });
 
     const {email, password, loading, error, redirectToReferrer} = values;
+    const {user} = isAuthenticated();
 
     const handleChange = name => event => {
         setValues({...values, error:false, [name]: event.target.value})
@@ -60,6 +63,14 @@ const Signin = () => {
 
     const redirectUser = () => {
         if(redirectToReferrer){
+            if(user && user.role === 1){
+                return <Redirect to="/admin/dashboard" />
+            }else{
+                return <Redirect to="/user/dashboard" />
+            }
+        }
+
+        if(isAuthenticated()){
             return <Redirect to="/" />
         }
     }
