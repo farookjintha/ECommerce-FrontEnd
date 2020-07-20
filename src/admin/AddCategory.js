@@ -12,7 +12,7 @@ const AddCategory = () => {
 
     //Destructure user and token from localstorage
     const {user, token} = isAuthenticated();
-    console.log("Token",token);
+    // console.log("Token",token);
 
     const handleChange = (e) =>{
         setError('');
@@ -48,7 +48,7 @@ const AddCategory = () => {
 
     const showSuccess = () => {
         if(success){
-            return <h3 className="text-success">Category {name} is created successfully!</h3>
+        return <h3 className="text-success">Category is created successfully!</h3>
         }
     }
 
@@ -58,6 +58,13 @@ const AddCategory = () => {
         }
     }
 
+    const goBack = () => (
+        <div className="mt-5">
+            <Link to="/admin/dashboard" className="text-warning">Back to dashboard</Link>
+        </div>
+    );
+
+
     return(
         <Layout title="Add a new category" description={`Hello, ${user.name}! Do you wanna add a product category?`} >
             <div className="row">
@@ -65,8 +72,10 @@ const AddCategory = () => {
                     {showSuccess()}
                     {showError()}
                     {newCategoryForm()}
+                    {goBack()}
                 </div>
             </div>
+            
         </Layout>
     )
 
