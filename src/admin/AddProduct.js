@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
-import {createCategory} from './apiAdmin';
+import {createProduct} from './apiAdmin';
 
 const AddProduct = () => {
 
@@ -49,12 +49,31 @@ const AddProduct = () => {
         setValues({...values, [name]: value})
     }
 
-    const clickSubmit = (event) => {
+    const clickSubmit = (e) => {
+        e.preventDefault();
+        setValues({...values,  error: "", loading: true });
 
+        createProduct(user._id, token, formData)
+        .then(data => {
+            if(data.error){
+                setValues({...values, error: data.error})
+            } else {
+                setValues({
+                    ...values,
+                    name: '',
+                    description: '',
+                    photo: '',
+                    price: '',
+                    quantity: '',
+                    loading: false,
+                    createdProduct: data.name
+                })
+            }
+        })
     };
 
     const newProductForm = () => (
-        <form className='mb-3' onSubmit={clickSubmit()}>
+        <form className='mb-3' onSubmit={clickSubmit}>
             <h4>Post Photo</h4>
             <div className='form-group'>
                 <label className='btn btn-outline-secondary'>
@@ -80,7 +99,8 @@ const AddProduct = () => {
             <div className='form-group'>
                 <label className='text-muted'>Category</label>
                 <select onChange={handleChange('category')} className='form-control'>
-                    <option value="5efb55d29592801be8cf70c7">Python</option>
+                    <option value="5efb55d29592801be8cf70c7">Pickle</option>
+                    <option value="5efb55d29592801be8cf70c7">Sweets</option>
                 </select>
             </div>
 
@@ -101,11 +121,20 @@ const AddProduct = () => {
         </form>
     );
 
+    const goBack = () => (
+        <div className="mt-5">
+            <Link to="/admin/dashboard" className="text-warning">Back to dashboard</Link>
+        </div>
+    );
+
 
     return (
         <Layout title="Add a new product" description={`Hello, ${user.name}! Do you wanna add a new product?`} >
             <div className="row">
-                <div className="col-md-8 offset-md-2">{newProductForm()}</div>
+                <div className="col-md-8 offset-md-2">
+                    {newProductForm()}
+                    {goBack()}
+                </div>
             </div>
             
         </Layout>
