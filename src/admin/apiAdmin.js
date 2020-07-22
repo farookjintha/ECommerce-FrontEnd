@@ -31,3 +31,13 @@ export const createProduct = (userId, token, product) => {
         })
         .catch(error => console.log(error));
 }
+
+export const getCategories = () => {
+    return fetch(`${API}/categories`, {
+        method: "GET"
+    })
+    .then(res => {
+        return res.json()
+    })
+    .catch(error => console.log(error));
+}
