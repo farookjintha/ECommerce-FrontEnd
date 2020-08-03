@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Layout from './Layout';
 import Card from './Card';
 import {getProducts} from './apiCore';
+import Search from './Search';
 
 const Home = () => {
 
@@ -37,6 +38,8 @@ const Home = () => {
 
     return(
         <Layout title="Home Page" description = "Node React E-commerce App" className="container-fluid">
+
+            <Search />
 
             <h2 className="mb-4">New Arrivals</h2>
             <div className="row">
