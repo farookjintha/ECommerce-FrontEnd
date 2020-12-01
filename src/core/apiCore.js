@@ -61,3 +61,13 @@ export const read = (productId) => {
     })
     .catch(error => console.log(error));
 }
+
+export const listRelated = (productId) => {
+    return fetch(`${API}/products/related/${productId}`, {
+        method: "GET"
+    })
+    .then(res => {
+        return res.json()
+    })
+    .catch(error => console.log(error));
+}
