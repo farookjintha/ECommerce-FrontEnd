@@ -32,11 +32,52 @@ export const itemTotal = () =>{
 
 
 export const getCart = () =>{
+    console.log("Brower getCart")
     if(typeof window !== 'undefined'){
+        console.log("Brower getCart 2")
         if(localStorage.getItem('cart')){
+            console.log("Brower gtCart3")
             return JSON.parse(localStorage.getItem('cart'));
         }
     }
 
     return [];
+}
+
+export const updateItem = (productId, count) => {
+    let cart=[];
+    if(typeof window !== 'undefind'){
+        if(localStorage.getItem('cart')){
+            cart = JSON.parse(localStorage.getItem('cart'))
+        }
+
+        cart.map((product, i) =>    {
+            if(product._id === productId){
+                cart[i].count = count
+            }
+        });
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+}
+
+export const removeItem = (productId) => {
+    let cart=[];
+    console.log("Browser")
+    if(typeof window !== 'undefined'){
+        console.log("Brower 2")
+        if(localStorage.getItem('cart')){
+            cart = JSON.parse(localStorage.getItem('cart'))
+        }
+
+        cart.map((product, i) =>    {
+            if(product._id === productId){
+                cart.splice(i, 1);
+            }
+        });
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    return cart;
 }
