@@ -8,8 +8,8 @@ const Signin = () => {
     // "email": "xavier@gmail.com",
 	// "password": "xxx123"
     const [values, setValues] = useState({
-        email: 'john@gmail.com',
-        password: 'jjj123',
+        email: 'farook@gmail.com',
+        password: 'farook123',
         error: '',
         loading: false,
         redirectToReferrer: false
@@ -77,7 +77,7 @@ const Signin = () => {
 
 
     return(
-        <Layout title="Sign In Page" description = "Sign-in to Node React E-commerce App" className="container col-md-8 offset-md-2">
+        <Layout title="Sign In Page" description = "Sign-in to Merit Rexine Shopping" className="container col-md-8 offset-md-2">
             {showLoading()}
             {showError()}
             {signInForm()}
