@@ -37,7 +37,7 @@ const Home = () => {
 
 
     return(
-        <Layout title="MERIT REXINE" description = "New Arrivals & Most Sold" className="container-fluid">
+        <Layout title="Happy Shopping!!!" description = "New Arrivals & Most Sold" className="container-fluid">
 
             <Search />
 

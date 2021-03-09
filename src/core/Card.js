@@ -10,7 +10,9 @@ const Card = ({product,
                 showViewProductButton = true, 
                 showAddToCartButton = true, 
                 cartUpdate = false, 
-                showRemoveProductButton = false}) => {
+                showRemoveProductButton = false,
+                setRun = f => f,
+                run = undefined}) => {
 
     const [redirect, setRedirect] = useState(false);
     const [count, setCount] = useState(product.count);
@@ -49,7 +51,14 @@ const Card = ({product,
 
     const showRemoveButton = (showRemoveProductButton) => {
         return showRemoveProductButton && (
-            <button className="btn btn-outline-danger mt-2 mb-2" onClick={() => removeItem(product._id)}>
+            <button 
+                onClick={() => {
+                    setRun(!run);
+                    removeItem(product._id);
+                     // run useEffect in parent Cart
+                }}
+
+                className="btn btn-outline-danger mt-2 mb-2" >
                     Remove Product
             </button>
         )
@@ -65,10 +74,10 @@ const Card = ({product,
 
     const handleChange = productId => event => {
         console.log("Value: ", event.target.value);
+        setRun(!run);
         setCount(event.target.value < 1 ? 1 : event.target.value);
         console.log("Count: ", count)
         if(event.target.value >= 1){
-            console.log()
             updateItem(productId, event.target.value);
         }
     }

@@ -8,10 +8,11 @@ import Checkout from './Checkout';
 
 const Cart = () => {
     const [items, setItems] = useState([]);
+    const [run, setRun] = useState(false);
 
     useEffect(() => {
-        setItems(getCart())
-    },[]);
+        setItems(getCart());
+    },[run]);
 
     const showItems = (items) => {
         return (
@@ -23,6 +24,8 @@ const Cart = () => {
                                                 showAddToCartButton={false} 
                                                 cartUpdate={true} 
                                                 showRemoveProductButton={true}
+                                                setRun={setRun}
+                                                run={run}
                                                 />))}
             </div>
         )
@@ -37,7 +40,7 @@ const Cart = () => {
     )
 
     return(
-        <Layout title="Your Cart" description = "Manage your items in cart. Add, remove items or continue shopping..." className="container-fluid">
+        <Layout title="Your Cart" description = "Manage your items in cart. Continue shopping..." className="container-fluid">
 
             <div className="row">
                 <div className="col-6">

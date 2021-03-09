@@ -5,18 +5,22 @@ import { itemTotal } from './cartHelper';
 
 const isActive = (history, path) => {
     if(history.location.pathname === path){
-        return {color: '#ff9900'}
+        return {color: '#ff9900', float: "right"}
     }else{
-        return {color: '#ffffff'}
+        return {color: '#ffffff', float: "right"}
     }
 }
 
 
 const Menu = ({history}) => {
     return (
-        <div>
-            <ul className="nav nav-tabs bg-primary">
-    
+        <nav>
+            <div className="nav nav-tabs bg-primary">
+                
+                <li className="nav-item">
+                    <a class="navbar-brand" href="" style={{cursor: 'pointer',color: 'black'}}>MERIT REXINE</a>
+                </li>
+
                 <li className="nav-item">
                     <Link className="nav-link" style={isActive(history, '/')} to="/" >Home</Link>
                 </li>
@@ -25,33 +29,42 @@ const Menu = ({history}) => {
                     <Link className="nav-link" style={isActive(history, '/shop')} to="/shop" >Shop</Link>
                 </li>
 
-                <li className="nav-item">
+                {!isAuthenticated() && (<li className="nav-item mr-auto">
                     <Link className="nav-link" style={isActive(history, '/cart')} to="/cart" >
                         Cart <sup><small className="cart-badge">{itemTotal()}</small></sup>
                     </Link>
-                </li>
+                </li>)}
+
+                {isAuthenticated() && (
+                    <li className="nav-item">
+                        <Link className="nav-link" style={isActive(history, '/cart')} to="/cart" >
+                            Cart <sup><small className="cart-badge">{itemTotal()}</small></sup>
+                        </Link>
+                    </li>
+                )}
 
                 {isAuthenticated() && isAuthenticated().user.role === 0 && (
-                    <li className="nav-item">
+                    <li className="nav-item" style={{float:'right'}}>
                         <Link className="nav-link" style={isActive(history, '/user/dashboard')} to="/user/dashboard" >Dashboard</Link>
                     </li>
                 )}
 
                 {isAuthenticated() && isAuthenticated().user.role === 1 && (
-                    <li className="nav-item">
+                    <li className="nav-item mr-auto">
                         <Link className="nav-link" style={isActive(history, '/admin/dashboard')} to="/admin/dashboard" >Dashboard</Link>
                     </li>
                 )}
 
                 {!isAuthenticated() && (
                     <Fragment>
-                        <li className="nav-item">
-                            <Link className="nav-link" style={isActive(history, '/signin')} to="/signin">Sign In</Link>
-                        </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" style={isActive(history, '/signin')} to="/signin">Sign In</Link>
+                            </li>
 
-                        <li className="nav-item">
-                            <Link className="nav-link" style={isActive(history, '/signup')} to="/signup">Sign Up</Link>
-                        </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" style={isActive(history, '/signup')} to="/signup">Sign Up</Link>
+                            </li>
+
                     </Fragment>
                 )}
 
@@ -69,8 +82,8 @@ const Menu = ({history}) => {
                 </li>
                 )}
 
-            </ul>
-        </div>
+            </div>
+        </nav>
     );
 }
 
